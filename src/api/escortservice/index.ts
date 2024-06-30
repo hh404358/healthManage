@@ -20,7 +20,7 @@ export function removeService(pNo:number,eNo:number,stNo:number){
 
 //陪诊师
 //注册
-export function Eregister(data:physicianType){
+export function Eregister(data:object){
 	return request({
 		url: '/escort/register',
 		method: 'post',

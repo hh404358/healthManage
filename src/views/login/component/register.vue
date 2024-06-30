@@ -236,7 +236,7 @@ const state = reactive({
 		eBirthday:'',
 		eId:'',
 		eCity:'',
-		eServiceType:'',
+		eServiceType:[],
 		isCarer:false,
 		status:true,
 		eNo:Math.random(),
@@ -319,7 +319,7 @@ const onRegister = async () => {
 			state.ruleForm.eBirthday='',
 			state.ruleForm.eId='',
 			state.ruleForm.eCity='',
-			state.ruleForm.eServiceType='',
+			state.ruleForm.eServiceType,
 			state.ruleForm.isCarer=false,
 			state.ruleForm.status=true,
 			state.ruleForm.eNo=Math.random()

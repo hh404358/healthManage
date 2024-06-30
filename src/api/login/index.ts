@@ -14,7 +14,7 @@ export function login(data:object){
 		headers:{
 			isToken:false
 		},
-		data: {data : data}
+
 	})
 }
 export function logout(data:object){
@@ -24,6 +24,6 @@ export function logout(data:object){
 		headers:{
 			isToken:true
 		},
-		data: {data : data}
+
 	})
 }

@@ -28,7 +28,16 @@
 							<el-input v-model="state.ruleForm.pCity" placeholder="请输入所在城市" clearable></el-input>
 						</el-form-item>
 					</el-col>
-					
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="陪诊师状态">
+							<el-radio-group v-model="state.ruleForm.pSex">
+								<el-icon class="el-input__icon"><ele-UserFilled /></el-icon>
+								<el-radio value="男">男</el-radio>
+								<el-icon class="el-input__icon"><ele-Avatar /></el-icon>
+								<el-radio value="女">女</el-radio>
+							</el-radio-group>
+						</el-form-item>
+					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="病人状态">
 							<el-switch v-model="state.ruleForm.status" inline-prompt active-text="启" inactive-text="禁"></el-switch>

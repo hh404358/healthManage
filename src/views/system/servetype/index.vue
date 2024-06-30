@@ -1,6 +1,6 @@
 <template>
 	<div class="system-Patient-container layout-padding" >
-		<el-card shadow="hover" class="layout-padding-auto" v-if="!alltype">
+		<el-card shadow="hover" class="layout-padding-auto" v-if="alltype">
 			<div class="system-Patient-search mb15">
 				<!-- <el-input size="default" placeholder="请输入服务类型名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -33,19 +33,19 @@
 				</el-table-column> -->
 				<el-table-column prop="stInformation" label="服务描述" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="stPrice" label="价格" show-overflow-tooltip></el-table-column>
-				<el-table-column label="操作" show-overflow-tooltip width="140">
+				<el-table-column label="操作" show-overflow-tooltip width="180">
 					<template #default="scope">
 						<el-button size="small" text type="primary" @click="onOpenAddServiceClass('add')" v-if="isadmin">新增</el-button>
 						<el-button size="small" text type="primary" @click="onOpenEditServiceClass('edit', scope.row)" v-if="isadmin">修改</el-button>
 						<el-button size="small" text type="primary" @click="onTabelRowDel(scope.row)" v-if="isadmin">删除</el-button>
-						<el-button size="small" text type="primary" @click="book()" >预约</el-button>
+						<el-button size="small" text type="primary" @click="book(scope.row.stNo)" >预约</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
 		</el-card>
 		<ServiceClassDialog ref="ServiceClassDialogRef" @refresh="getTableData()" />
 
-		<el-card shadow="hover" class="layout-padding-auto" v-if="alltype">
+		<el-card shadow="hover" class="layout-padding-auto" v-if="!alltype">
 			<el-table
 				:data="state1.tableData.data"
 				v-loading="state1.tableData.loading"
@@ -90,7 +90,7 @@ import { defineAsyncComponent, ref, reactive, onMounted } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { Session } from '/@/utils/storage';
 import { getService, listServiceType, removeServiceType } from '/@/api/servetype';
-import { listAllService } from '/@/api/escortservice';
+import { listAllService, reserveService } from '/@/api/escortservice';
 import { getEscorts } from '/@/api/escort';
 
 const roleSign = Session.get('roleSign');
@@ -128,14 +128,18 @@ const state1 = reactive<SysPhysicianState>({
 		},
 	},
 });
-const book = () =>{
+const book = (stNo:number) =>{
 	alltype = !alltype;
+	reserveService(stNo).then(){
+		ElMessage.success('预约成功');
+	}
 }
 // 初始化表格数据
 const getTableData = () => {
 
 	state.tableData.loading = true;
 	state.tableData.data = [];
+	state1.tableData.data = [];
 	if(alltype){
 		listServiceType().then(response=>{
 		state.tableData.data = response.data;

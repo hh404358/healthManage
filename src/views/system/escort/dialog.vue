@@ -38,6 +38,16 @@
 							<el-switch v-model="state.ruleForm.status" inline-prompt active-text="启" inactive-text="禁"></el-switch>
 						</el-form-item>
 					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="陪诊师状态">
+							<el-radio-group v-model="state.ruleForm.eSex">
+								<el-icon class="el-input__icon"><ele-UserFilled /></el-icon>
+								<el-radio value="男">男</el-radio>
+								<el-icon class="el-input__icon"><ele-Avatar /></el-icon>
+								<el-radio value="女">女</el-radio>
+							</el-radio-group>
+						</el-form-item>
+					</el-col>
 				    <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="是否是医护人员">
 							<el-switch v-model="state.ruleForm.isCarer" inline-prompt active-text="是" inactive-text="否"></el-switch>

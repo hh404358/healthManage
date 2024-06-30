@@ -93,9 +93,7 @@ export function formatTwoStageRoutes(arr: any) {
 router.beforeEach(async (to, from, next) => {
 	NProgress.configure({ showSpinner: false });
 	if (to.meta.title) NProgress.start();
-	// const token = Session.get('token');
-	const token = localStorage.getItem('token');
-	console.log('local:',token);
+	const token = Session.get('token');
 	if (to.path === '/login' && !token) {
 		next();
 		NProgress.done();

@@ -6,7 +6,7 @@ export default {
 		systemPatient: 'systemPatient',
 		systemPhysician: 'systemPhysician',
 		systemService: 'systemService',
-		systemType: 'systemType',
+		systemServiceClass: 'systemServiceClass',
 		systemMenu: 'systemMenu',
 		systemRole: 'systemRole',
 		systemUser: 'systemUser',

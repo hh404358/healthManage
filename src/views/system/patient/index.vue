@@ -3,7 +3,7 @@
 		<el-card shadow="hover" class="layout-padding-auto">
 			<div class="system-Patient-search mb15">
 				<el-input size="default" placeholder="请输入病人名称" style="max-width: 180px" v-model="name"> </el-input>
-				<el-button size="default" type="primary" class="ml10" @click="getByPatientName(name)">
+				<el-button size="default" type="primary" class="ml10" @click="getByName(name)">
 					<el-icon>
 						<ele-Search />
 					</el-icon>
@@ -80,18 +80,17 @@ const state = reactive<SysPatientState>({
 	},
 });
 const getByName = (name:string) =>{
-	getPatientByName(name).then((response:object)=>{
-		state.PatientData = response;
+	getPatientByName(name).then((response)=>{
+		state.tableData.data = response.data;
 	});
 }
 // 初始化表格数据
 const getTableData = () => {
 	state.tableData.loading = true;
 	state.tableData.data = [];
-	// listPatient().then((response:object)=>{
-	// 	state.tableData.data = response;
-	// })
-	//state.tableData.data = listPatient();
+	listPatient().then(response=>{
+		state.tableData.data=response.data;
+	});
 	state.tableData.data.push({
 		password:'123',
 		status:true,
@@ -102,21 +101,9 @@ const getTableData = () => {
 		pBirthday:new Date().toLocaleString(),
 		pId:'35077700106243212',
 		pCity:'厦门',
-		roleSign: '病人'		,
 
 	});
 	state.tableData.data.push({
-		// id: Math.random(),
-		// name: 'ljr',
-		// status: true,
-		// sort: Math.random(),
-		// ID: '35077700106243211',
-		// birthdate: new Date().toLocaleString(),
-		// phone: '12345678911',
-		// city: '南平',
-		// sex: '女',
-		// password: '123',
-		// roleSign: '病人'
 		password:'123',
 		status:true,
 		phonenumber:'12345678921',
@@ -126,22 +113,11 @@ const getTableData = () => {
 		pBirthday:new Date().toLocaleString(),
 		pId:'35077700106243212',
 		pCity:'厦门',
-		roleSign: '病人',
 
 			
 	});
 	state.tableData.data.push({
-		// id: Math.random(),
-		// name: 'hahaha',
-		// status: true,
-		// sort: Math.random(),
-		// ID: '35077700106113212',
-		// birthdate: new Date().toLocaleString(),
-		// phone: '12345678121',
-		// city: '厦门',
-		// sex: '男',
-		// password: '123',
-		// roleSign: '病人'
+		
 		password:'123',
 		status:true,
 		phonenumber:'12345678921',
@@ -151,8 +127,6 @@ const getTableData = () => {
 		pBirthday:new Date().toLocaleString(),
 		pId:'35077700106243212',
 		pCity:'厦门',
-		roleSign: '病人',
-
 			
 	});
 	state.tableData.total = state.tableData.data.length;
@@ -176,7 +150,7 @@ const onTabelRowDel = (row: PatientTreeType) => {
 		type: 'warning',
 	})
 		.then(() => {
-			delPatient(row.id);
+			delPatient(row.pNo);
 			getTableData();
 			ElMessage.success('删除成功');
 		})

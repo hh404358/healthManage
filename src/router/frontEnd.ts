@@ -87,9 +87,15 @@ export function setFilterRoute(chil: any) {
 	chil.forEach((route: any) => {
 		if (route.meta.roles) {
 			route.meta.roles.forEach((metaRoles: any) => {
+				console.log('metaRoles:',metaRoles);
 				userInfos.value.roles.forEach((roles: any) => {
+				
 					if (metaRoles === roles) filterRoute.push({ ...route });
+					
+					
 				});
+					
+				
 			});
 		}
 	});

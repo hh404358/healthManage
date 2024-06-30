@@ -26,26 +26,15 @@
 								<el-tab-pane :label="$t('message.label.one1')" name="account">
 									<Account />
 								</el-tab-pane>
-								<el-tab-pane :label="$t('message.label.two2')" name="mobile">
-									<Mobile />
+								<el-tab-pane :label="$t('message.label.three3')" name="register">
+									<Register />
 								</el-tab-pane>
 							</el-tabs>
 
 							</div>
-							<Register v-if="!state.isLogin"/>
+							<!-- <Register v-if="!state.isLogin"/> -->
 						</div>
 						<Scan v-if="state.isScan" />	
-						
-							<div v-if="state.isLogin" @click="toggleLoginStatus">
-								<div >
-									{{ $t('message.label.three3') }}
-								</div>
-							</div>
-							<div v-if="!state.isLogin" >
-								<div  @click="state.isLogin = !state.isLogin">
-									{{ $t('message.label.four4') }}
-								</div>							
-							</div>
 						
 						<div  class="login-content-main-sacn" @click="state.isScan = !state.isScan">
 							<i class="iconfont" :class="state.isScan ? 'icon-diannao1' : 'icon-barcode-qr'"></i>
@@ -83,6 +72,7 @@ const state = reactive({
 	isLogin: true,
 });
 const toggleLoginStatus = () =>{
+	console.log(state.isLogin)
 	state.isLogin = !state.isLogin;
 }
 // 获取布局配置信息

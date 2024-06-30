@@ -6,7 +6,7 @@ export default {
 		systemPatient: '病人管理',
 		systemPhysician: '陪診師管理',
 		systemService: '陪診服務管理',
-		systemType: '陪診服務類別管理',
+		systemServiceClass: '陪診服務類別管理',
 		systemMenu: '選單管理',
 		systemRole: '角色管理',
 		systemUser: '用戶管理',

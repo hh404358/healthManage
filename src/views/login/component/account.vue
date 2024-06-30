@@ -30,9 +30,9 @@
 		<el-form-item>
 			<el-select placeholder="请选择身份" v-model="state.ruleForm.roleSign">
 				<el-option v-for="item in state.roles"
-				:value = item.value
-				:key = item.index
-				:label = item.value >
+				:value = item
+				:key = item.indexOf
+				:label = item >
 				</el-option>
 			</el-select>
 		</el-form-item>
@@ -75,163 +75,87 @@ const state = reactive({
 	ruleForm: {
 		userName: '',
 		password: '',
-		roleSign:''
+		roleSign:'',
+		roles:''
 	},
 	loading: {
 		signIn: false,
 	},
 	roles:[
-		{
-			index:1,
-			value:"admin"
-		},
-		{
-			index:2,
-			value:"patient"
-		},
-		{
-			index:3,
-			value:"pysician"
-		}
+		"admin",
+		"patient",
+		"escort"
 	
 	]
 	
 	
 });
-const storesUserInfo = useUserInfo();
 
 // 时间获取
 const currentTime = computed(() => {
 	return formatAxis(new Date());
 });
 
+
+
 // 登录
 const onSignIn = async () => {
 	state.loading.signIn = true;
-	console.log(state.ruleForm.roleSign);
-	// login(state.roleForm).then(async (response:object)=>{
-	// // 登录成功记录token和用户信息，登录失败给对应提示
-	// if(response.code !=200){
-	// 	ElMessage.warning('抱歉，您没有登录权限');
-	// 	Session.clear();
-	// 	return;
-	// }
-	//Session.set('token',response.token);
-	//const token = login(state.ruleForm);
-	 Session.set('token', Math.random().toString(36).substr(0));
-	// 存储用户信息
-	//localStorage.setItem("userInfo",JSON.stringify(state.roleForm))
+	// 存储 token 到浏览器缓存
+	login(state.ruleForm).then(async (response)=>{
+	// 登录成功记录token和用户信息，登录失败给对应提示
+	Session.set('token',response.data);
 	Cookies.set('userName', state.ruleForm.userName);
 	Session.set('roleSign',state.ruleForm.roleSign);
-	frontEndsResetRoute();
-	let userAuth;
-	if (Session.get('roleSign') === 'admin'){
-		userAuth = 'admin';
-	}
-	else if(Session.get('roleSign') === 'physician'){
-		userAuth = 'physician';
-	}else{
-		userAuth = 'patient';
-	}
-	Cookies.set('roleSign', userAuth);
-	// 切换不同权限用户
-	await storesUserInfo.setUserInfos();
-	await setAddRoute();
-	setFilterMenuAndCacheTagsViewRoutes();
-
-	let isNoPower;
+	let role: Array<string> = [state.ruleForm.roleSign];
+	const userInfos = {
+						userName: state.ruleForm.userName,
+						photo:
+								state.ruleForm.userName === 'admin'
+								? 'https://img2.baidu.com/it/u=1978192862,2048448374&fm=253&fmt=auto&app=138&f=JPEG?w=504&h=500'
+								: 'https://img2.baidu.com/it/u=2370931438,70387529&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+						time: new Date().getTime(),
+						roles: role,
+					};
+	Session.set('userInfo', userInfos);
+	
 	if (!themeConfig.value.isRequestRoutes) {
-		// 前端控制路由
-		isNoPower = await initFrontEndControlRoutes();
-			
+		const isNoPower = await initFrontEndControlRoutes();
+		signInSuccess(isNoPower);
 	} else {
-		// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-		isNoPower = await initBackEndControlRoutes();
+		const isNoPower = await initBackEndControlRoutes();
+		signInSuccess(isNoPower);
 	}
-	if(isNoPower){
-			ElMessage.warning('抱歉，您没有登录权限');
-			Session.clear();
-		}else{
-			signInSuccess();
-		}
-                    
-    //  }).catch(e =>{
-	// 	console.log(e)
-	// 	ElMessage.warning('出现异常，请联系管理人员');
-	// 		Session.clear();
-	//  })
-      
-	// // 存储 token 到浏览器缓存
-	// if(login(state.ruleForm))
-	// //const token = login(state.ruleForm);
-	// Session.set('token', Math.random().toString(36).substr(0));
-	// //Session.set('token',token);
-	// // 模拟数据，对接接口时，记得删除多余代码及对应依赖的引入。用于 `/src/stores/userInfo.ts` 中不同用户登录判断（模拟数据）
-	// Cookies.set('userName', state.ruleForm.userName);
-	// Session.set('roleSign',state.ruleForm.roleSign);
-
-	// frontEndsResetRoute();
-	// let userAuth;
-	// if (Session.get('roleSign') === 'admin'){
-	// 	userAuth = 'admin';
-	// }
-	// else if(Session.get('roleSign') === 'physician'){
-	// 	userAuth = 'physician';
-	// }else{
-	// 	userAuth = 'patient';
-	// }
-	// Cookies.set('userName', userAuth);
-	// // 模拟切换不同权限用户
-	// await storesUserInfo.setUserInfos();
-	// await setAddRoute();
-	// setFilterMenuAndCacheTagsViewRoutes();
-
-
-
-	// let isNoPower;
-	// if (!themeConfig.value.isRequestRoutes) {
-	// 	// 前端控制路由
-	// 	isNoPower = await initFrontEndControlRoutes();
-	// 	if(isNoPower){
-	// 		ElMessage.warning('抱歉，您没有登录权限');
-	// 		Session.clear();
-	// 	}else{
-	// 		signInSuccess();
-	// 	}
-		
-	// } else {
-	// 	// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-	// 	isNoPower = await initBackEndControlRoutes();
-	// 	// 执行完 initBackEndControlRoutes，再执行 signInSuccess
-	// 	if(isNoPower){
-	// 		ElMessage.warning('抱歉，您没有登录权限');
-	// 		Session.clear();
-	// 	}else{
-	// 		signInSuccess();
-	// 	}
-	// }
-	
+	}).catch(e =>{
+		console.log('e',e)
+		ElMessage.warning('出现异常，请联系管理人员');
+		Session.clear();
+	 })
 };
+
+
 // 登录成功后的跳转
-const signInSuccess = () => {
-	
-	// 初始化登录成功时间问候语
-	let currentTimeInfo = currentTime.value;
-	// 登录成功，跳到转首页
-	// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
-	if (route.query?.redirect) {
-		router.push({
-			path: <string>route.query?.redirect,
-			query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
-		});
+const signInSuccess = (isNoPower: boolean | undefined) => {
+	if (isNoPower) {
+		ElMessage.warning('抱歉，您没有登录权限');
+		Session.clear();
 	} else {
-		router.push('/');
+		// 初始化登录成功时间问候语
+		let currentTimeInfo = currentTime.value;
+		if (route.query?.redirect) {
+			router.push({
+				path: <string>route.query?.redirect,
+				query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+			});
+		} else {
+			router.push('/');
+		}
+		// 登录成功提示
+		const signInText = t('message.signInText');
+		ElMessage.success(`${currentTimeInfo}，${signInText}`);
+		// 添加 loading，防止第一次进入界面时出现短暂空白
+		NextLoading.start();
 	}
-	// 登录成功提示
-	const signInText = t('message.signInText');
-	ElMessage.success(`${currentTimeInfo}，${signInText}`);
-	// 添加 loading，防止第一次进入界面时出现短暂空白
-	NextLoading.start();
 	state.loading.signIn = false;
 };
 </script>

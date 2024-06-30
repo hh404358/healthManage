@@ -24,33 +24,7 @@ declare type PersonalState = {
 	};
 };
 
-/**
- * views visualizing
- */
-declare type Demo2State<T = any> = {
-	time: {
-		txt: string;
-		fun: number;
-	};
-	dropdownList: T[];
-	dropdownActive: string;
-	skyList: T[];
-	dBtnList: T[];
-	chartData4Index: number;
-	dBtnActive: number;
-	earth3DBtnList: T[];
-	chartData4List: T[];
-	myCharts: T[];
-};
 
-/**
- * views params
- */
-declare type ParamsState = {
-	value: string;
-	tagsViewName: string;
-	tagsViewNameIsI18n: boolean;
-};
 
 /**
  * views system
@@ -102,24 +76,23 @@ interface SysUserTableType extends TableType {
 declare interface SysUserState {
 	tableData: SysUserTableType;
 }
-declare interface physicianType extends RowUserType {
-	isDoctor: boolean;
-	type: number | string;
-}
+// declare interface physicianType extends RowUserType {
+// 	isDoctor: boolean;
+// 	type: number | string;
+// }
 
 // Patient
 declare type PatientTreeType = {
 	// account:string,
-	password:string,
-	status:boolean,
-	phonenumber:string,
-	pNo:number,
-	pName:string,
-	pSex:string,
-	pBirthday:string,
-	pId:string,
-	pCity:string
-	status:boolean
+	password:string;
+	status:boolean;
+	phonenumber:string;
+	pNo:number;
+	pName:string;
+	pSex:string;
+	pBirthday:string;
+	pId:string;
+	pCity:string;
 	// id: number | string;
 	// name: string;
 	// status: boolean;
@@ -135,9 +108,9 @@ declare type PatientTreeType = {
 
 declare interface RowPatientType extends PatientTreeType {
 	PatientLevel: string[];
-	person: string;
-	phone: string;
-	email: string;
+	// person: string;
+	// phone: string;
+	// email: string;
 }
 
 interface SysPatientTableType extends TableType {
@@ -148,12 +121,32 @@ declare interface SysPatientState {
 	tableData: SysPatientTableType;
 }
 
+//Physician
+declare type physicianType = {
+	// account:string,
+	password:string;
+	status:boolean;
+	phonenumber:string;
+	eNo:number;
+	eName:string;
+	eSex:string;
+	eBirthday:string;   //存疑  date类型
+	eId:string;
+	eCity:string;  
+	isCarer:char;  //存疑 char?
+    eServiceType:string; //后端是int类型 但感觉字符型更合理
+};
+
+declare interface SysPhysicianState {
+	tableData: SysPhysicianTableType;
+}
+
 // service type
 declare type RowServiceClassType<T = any> = {
-	id: number | string;
-	type: string;
-	description: string;
-	price: DoubleRange;
+	stNo: number;
+	stType: string;
+	stInformation: string;
+	stPrice: number;
 	
 };
 
@@ -166,23 +159,25 @@ declare interface SysServiceClassState {
 }
 // service
 declare type RowServiceType<T = any> = {
-	id: number | string;
-	userId: number | string;
-	username: string;
-	typeId: number | string;
-	type: string;
-	pId: number | string;
-	phyname: string;
-	isFinish: boolean;
+	
+	stNo: number;
+	stType: string;
+	stPrice: number;
+	stInformation: string;
+	eName:string;
+	pName:string;
+	eNo:number;
+	pNo:number;
+	isFinish: string;
 	
 };
 
 interface SysServiceTableType extends TableType {
-	data: RowServiceClassType[];
+	data: RowServiceType[];
 }
 
 declare interface SysServiceState {
-	tableData: SysServiceClassTableType;
+	tableData: SysServiceTableType;
 }
 // dic
 type ListType = {
@@ -208,6 +203,19 @@ declare interface SysDicState {
 	tableData: SysDicTableType;
 }
 
+declare type RowPersonalType<T = any> = {
+	name: string;
+	status: boolean;
+	phone: string;
+	birthdate: string;
+	city: string;
+	personalForm: {
+		email: string;
+		autograph: string;
+		occupation: string;
+		sex: string;
+	  };
+};
 /**
  * views pages
  */

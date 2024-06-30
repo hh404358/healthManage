@@ -72,7 +72,6 @@ export function formatTwoStageRoutes(arr: any) {
 			newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] });
 		} else {
 			// 判断是否是动态路由（xx/:id/:name），用于 tagsView 等中使用
-			// 修复：https://gitee.com/lyt-top/vue-admin/issues/I3YX6G
 			if (v.path.indexOf('/:') > -1) {
 				v.meta['isDynamic'] = true;
 				v.meta['isDynamicPath'] = v.path;
@@ -94,7 +93,9 @@ export function formatTwoStageRoutes(arr: any) {
 router.beforeEach(async (to, from, next) => {
 	NProgress.configure({ showSpinner: false });
 	if (to.meta.title) NProgress.start();
-	const token = Session.get('token');
+	// const token = Session.get('token');
+	const token = localStorage.getItem('token');
+	console.log('local:',token);
 	if (to.path === '/login' && !token) {
 		next();
 		NProgress.done();

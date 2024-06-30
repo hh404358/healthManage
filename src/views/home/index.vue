@@ -91,7 +91,7 @@ const state = reactive({
 		{
 			num1: '125,12',
 			num2: '-12.32',
-			num3: '订单统计信息',
+			num3: '服务统计信息',
 			num4: 'fa fa-meetup',
 			color1: '#FF6462',
 			color2: '--next-color-primary-lighter',
@@ -196,13 +196,13 @@ const initLineChart = () => {
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
-			text: '政策补贴额度',
+			text: '服务',
 			x: 'left',
 			textStyle: { fontSize: '15', color: state.charts.color },
 		},
 		grid: { top: 70, right: 20, bottom: 30, left: 30 },
 		tooltip: { trigger: 'axis' },
-		legend: { data: ['预购队列', '最新成交价'], right: 0 },
+		legend: { data: ['新增病人', '新增陪诊师'], right: 0 },
 		xAxis: {
 			data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
 		},
@@ -215,7 +215,7 @@ const initLineChart = () => {
 		],
 		series: [
 			{
-				name: '预购队列',
+				name: '新增病人',
 				type: 'line',
 				symbolSize: 6,
 				symbol: 'circle',
@@ -231,7 +231,7 @@ const initLineChart = () => {
 				},
 			},
 			{
-				name: '最新成交价',
+				name: '新增陪诊师',
 				type: 'line',
 				symbolSize: 6,
 				symbol: 'circle',
@@ -275,7 +275,7 @@ const initLineChart = () => {
 const initPieChart = () => {
 	if (!state.global.dispose.some((b: any) => b === state.global.homeChartTwo)) state.global.homeChartTwo.dispose();
 	state.global.homeChartTwo = markRaw(echarts.init(homePieRef.value, state.charts.theme));
-	var getname = ['房屋及结构物', '专用设备', '通用设备', '文物和陈列品', '图书、档案'];
+	var getname = ['院内陪诊', '全程陪诊', '尊享陪朕'];
 	var getvalue = [34.2, 38.87, 17.88, 9.05, 2.05];
 	var data = [];
 	for (var i = 0; i < getname.length; i++) {
@@ -285,7 +285,7 @@ const initPieChart = () => {
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
-			text: '房屋建筑工程',
+			text: '管理',
 			x: 'left',
 			textStyle: { fontSize: '15', color: state.charts.color },
 		},
@@ -363,24 +363,24 @@ const initBarChart = () => {
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
-			text: '地热开发利用',
+			text: '健康管理系统',
 			x: 'left',
 			textStyle: { fontSize: '15', color: state.charts.color },
 		},
 		tooltip: { trigger: 'axis' },
-		legend: { data: ['供温', '回温', '压力值(Mpa)'], right: 0 },
+		legend: { data: ['病人', '陪诊师', '服务'], right: 0 },
 		grid: { top: 70, right: 80, bottom: 30, left: 80 },
 		xAxis: [
 			{
 				type: 'category',
-				data: ['1km', '2km', '3km', '4km', '5km', '6km'],
+				data: ['1k', '2k', '3k', '4k', '5k', '6k'],
 				boundaryGap: true,
 				axisTick: { show: false },
 			},
 		],
 		yAxis: [
 			{
-				name: '供回温度(℃）',
+				name: '病人',
 				nameLocation: 'middle',
 				nameTextStyle: { padding: [3, 4, 50, 6] },
 				splitLine: { show: true, lineStyle: { type: 'dashed', color: '#f5f5f5' } },
@@ -389,7 +389,7 @@ const initBarChart = () => {
 				axisLabel: { color: state.charts.color, formatter: '{value} ' },
 			},
 			{
-				name: '压力值(Mpa)',
+				name: '陪诊师',
 				nameLocation: 'middle',
 				nameTextStyle: { padding: [50, 4, 5, 6] },
 				splitLine: { show: false },
@@ -400,7 +400,7 @@ const initBarChart = () => {
 		],
 		series: [
 			{
-				name: '供温',
+				name: '病人',
 				type: 'line',
 				smooth: true,
 				showSymbol: true,
@@ -428,7 +428,7 @@ const initBarChart = () => {
 				],
 			},
 			{
-				name: '回温',
+				name: '陪诊师',
 				type: 'line',
 				smooth: true,
 				showSymbol: true,
@@ -461,7 +461,7 @@ const initBarChart = () => {
 				],
 			},
 			{
-				name: '压力值(Mpa)',
+				name: '服务',
 				type: 'bar',
 				barWidth: 30,
 				yAxisIndex: 1,

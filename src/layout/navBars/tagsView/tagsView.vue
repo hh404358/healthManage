@@ -192,7 +192,6 @@ const singleAddTagsView = (path: string, to?: RouteToFrom) => {
 const addTagsView = (path: string, to?: RouteToFrom) => {
 	// 防止拿取不到路由信息
 	nextTick(async () => {
-		// 修复：https://gitee.com/lyt-top/vue-admin/issues/I3YX6G
 		let item: RouteItem;
 		if (to?.meta?.isDynamic) {
 			// 动态路由（xxx/:id/:name"）：参数不同，开启多个 tagsview
@@ -520,7 +519,6 @@ const initSortable = async () => {
 		},
 	});
 };
-// 拖动问题，https://gitee.com/lyt-top/vue-admin/issues/I3ZRRI
 const onSortableResize = async () => {
 	await initSortable();
 	if (other.isMobile()) state.sortable.el && state.sortable.destroy();
@@ -529,7 +527,7 @@ const onSortableResize = async () => {
 onBeforeMount(() => {
 	// 初始化，防止手机端直接访问时还可以拖拽
 	onSortableResize();
-	// 拖动问题，https://gitee.com/lyt-top/vue-admin/issues/I3ZRRI
+
 	window.addEventListener('resize', onSortableResize);
 	// 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
 	mittBus.on('onCurrentContextmenuClick', (data: RouteItem) => {

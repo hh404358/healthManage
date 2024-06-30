@@ -20,7 +20,7 @@ service.interceptors.request.use(
 	(config) => {
 		// 在发送请求之前做些什么 token
 		if (Session.get('token')) {
-			config.headers!['Authorization'] = `${Session.get('token')}`;
+			config.headers!['token'] = `${Session.get('token')}`;
 		}
 		return config;
 	},
@@ -45,7 +45,18 @@ service.interceptors.response.use(
 					.then(() => {})
 					.catch(() => {});
 			}
-			return Promise.reject(service.interceptors.response);
+			if(res.code === 200 ){
+				return res;
+			}
+			if(res.code === 500 ){
+				ElMessageBox.alert('HTTP 500错误', '提示', {})
+					.then(() => {})
+					.catch(() => {});
+			}
+			console.log(res);
+			console.log('res.code',res.code)
+			
+			//return Promise.reject(service.interceptors.response);
 		} else {
 			return res;
 		}

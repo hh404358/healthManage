@@ -42,28 +42,28 @@
 					</div>
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<div class="flex-title">当前设备状态</div>
+							<div class="flex-title">服务统计信息</div>
 							<div class="flex-content flex-content-overflow">
 								<div class="d-states">
 									<div class="d-states-item">
 										<SvgIcon name="ele-Odometer" class="i-bg1" />
 										<div class="d-states-flex">
-											<div class="d-states-item-label">园区设备数</div>
-											<div class="d-states-item-value">99</div>
+											<div class="d-states-item-label">病人数</div>
+											<div class="d-states-item-value">{{state.patientNum}}</div>
 										</div>
 									</div>
 									<div class="d-states-item">
 										<SvgIcon name="ele-FirstAidKit" class="i-bg2" />
 										<div class="d-states-flex">
-											<div class="d-states-item-label">预警设备数</div>
-											<div class="d-states-item-value">10</div>
+											<div class="d-states-item-label">陪诊师</div>
+											<div class="d-states-item-value">{{state.escortNum}}</div>
 										</div>
 									</div>
 									<div class="d-states-item">
 										<SvgIcon name="ele-VideoPlay" class="i-bg3" />
 										<div class="d-states-flex">
-											<div class="d-states-item-label">运行设备数</div>
-											<div class="d-states-item-value">20</div>
+											<div class="d-states-item-label">服务</div>
+											<div class="d-states-item-value">{{state.serviceNum}}</div>
 										</div>
 									</div>
 								</div>
@@ -81,7 +81,7 @@
 					</div>
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<div class="flex-title">近30天预警总数</div>
+							<div class="flex-title">近30天服务</div>
 							<div class="flex-content">
 								<div style="height: 100%" ref="chartsWarningRef"></div>
 							</div>
@@ -99,7 +99,7 @@
 					<div class="big-data-down-center-two">
 						<div class="flex-warp-item-box">
 							<div class="flex-title">
-								<span>当前设备监测</span>
+								<span>当前陪诊服务</span>
 								<span class="flex-title-small">单位：次</span>
 							</div>
 							<div class="flex-content">
@@ -125,7 +125,7 @@
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
 							<div class="flex-title">
-								<span>近7天产品追溯扫码统计</span>
+								<span>近7天陪诊服务</span>
 								<span class="flex-title-small">单位：次</span>
 							</div>
 							<div class="flex-content">
@@ -133,68 +133,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="flex-warp-item">
-						<div class="flex-warp-item-box">
-							<div class="flex-title">当前任务统计</div>
-							<div class="flex-content">
-								<div class="task">
-									<div class="task-item task-first-item">
-										<div class="task-item-value task-first">25</div>
-										<div class="task-item-label">待办任务</div>
-									</div>
-									<div class="task-item">
-										<div class="task-item-box task1">
-											<div class="task-item-value">12</div>
-											<div class="task-item-label">施肥</div>
-										</div>
-									</div>
-									<div class="task-item">
-										<div class="task-item-box task2">
-											<div class="task-item-value">3</div>
-											<div class="task-item-label">施药</div>
-										</div>
-									</div>
-									<div class="task-item">
-										<div class="task-item-box task3">
-											<div class="task-item-value">5</div>
-											<div class="task-item-label">农事</div>
-										</div>
-									</div>
-								</div>
-								<div class="progress">
-									<div class="progress-item">
-										<span>施肥率</span>
-										<div class="progress-box">
-											<el-progress :percentage="70" color="#43bdf0"></el-progress>
-										</div>
-									</div>
-									<div class="progress-item">
-										<span>施药率</span>
-										<div class="progress-box">
-											<el-progress :percentage="36" color="#43bdf0"></el-progress>
-										</div>
-									</div>
-									<div class="progress-item">
-										<span>农事率</span>
-										<div class="progress-box">
-											<el-progress :percentage="91" color="#43bdf0"></el-progress>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="flex-warp-item">
-						<div class="flex-warp-item-box">
-							<div class="flex-title">
-								<span>近7天投入品记录</span>
-								<span class="flex-title-small">单位：件</span>
-							</div>
-							<div class="flex-content">
-								<div style="height: 100%" ref="chartsInvestmentRef"></div>
-							</div>
-						</div>
-					</div>
+			
+				
 				</div>
 			</div>
 		</div>
@@ -225,6 +165,9 @@ const state = reactive({
 	dBtnList,
 	chartData4List,
 	myCharts: [] as EmptyArrayType,
+	patientNum: 100,
+	escortNum:26,
+	serviceNum:10
 });
 
 // 初始化中间图表1
@@ -256,31 +199,31 @@ const initChartsCenterOne = () => {
 					},
 				},
 				data: [
-					{ name: 'vue-admin', value: 520 },
-					{ name: 'lyt', value: 520 },
-					{ name: 'next-admin', value: 500 },
-					{ name: '更名', value: 420 },
-					{ name: '智慧农业', value: 520 },
-					{ name: '男神', value: 2.64 },
-					{ name: '好身材', value: 4.03 },
-					{ name: '校草', value: 24.95 },
-					{ name: '酷', value: 4.04 },
-					{ name: '时尚', value: 5.27 },
-					{ name: '阳光活力', value: 5.8 },
-					{ name: '初恋', value: 3.09 },
-					{ name: '英俊潇洒', value: 24.71 },
-					{ name: '霸气', value: 6.33 },
-					{ name: '腼腆', value: 2.55 },
-					{ name: '蠢萌', value: 3.88 },
-					{ name: '青春', value: 8.04 },
-					{ name: '网红', value: 5.87 },
-					{ name: '萌', value: 6.97 },
-					{ name: '认真', value: 2.53 },
-					{ name: '古典', value: 2.49 },
-					{ name: '温柔', value: 3.91 },
-					{ name: '有个性', value: 3.25 },
-					{ name: '可爱', value: 9.93 },
-					{ name: '幽默诙谐', value: 3.65 },
+					{ name: '健康管理系统', value: 520 },
+					{ name: 'ljr', value: 520 },
+					{ name: '健康', value: 500 },
+					{ name: 'health', value: 420 },
+					{ name: 'healthcare', value: 520 },
+					{ name: 'patient', value: 2.64 },
+					{ name: 'escort', value: 4.03 },
+					{ name: 'service', value: 24.95 },
+					{ name: 'escort', value: 4.04 },
+					{ name: 'better', value: 5.27 },
+					{ name: '健康管理', value: 5.8 },
+					{ name: 'servicetype', value: 3.09 },
+					{ name: '院内陪朕', value: 24.71 },
+					{ name: '全程陪诊', value: 6.33 },
+					{ name: '尊享陪诊', value: 2.55 },
+					{ name: '管理员', value: 3.88 },
+					{ name: 'admin', value: 8.04 },
+					{ name: 'health', value: 5.87 },
+					{ name: 'healthcare', value: 6.97 },
+					{ name: 'management', value: 2.53 },
+					{ name: 'ljr', value: 2.49 },
+					{ name: 'better life', value: 3.91 },
+					{ name: 'phone', value: 3.25 },
+					{ name: 'health', value: 9.93 },
+					{ name: '健康管理系统', value: 3.65 },
 				],
 			},
 		],
@@ -288,7 +231,7 @@ const initChartsCenterOne = () => {
 	myChart.setOption(option);
 	state.myCharts.push(myChart);
 };
-// 初始化近7天产品追溯扫码统计
+// 初始化近7天信息统计
 const initChartsSevenDays = () => {
 	const myChart = echarts.init(chartsSevenDaysRef.value);
 	const option = {
@@ -311,19 +254,19 @@ const initChartsSevenDays = () => {
 		},
 		series: [
 			{
-				name: '邮件营销',
+				name: '病人',
 				type: 'line',
 				stack: '总量',
 				data: [12, 32, 11, 34, 90, 23, 21],
 			},
 			{
-				name: '联盟广告',
+				name: '陪诊师',
 				type: 'line',
 				stack: '总量',
 				data: [22, 82, 91, 24, 90, 30, 30],
 			},
 			{
-				name: '视频广告',
+				name: '服务',
 				type: 'line',
 				stack: '总量',
 				data: [50, 32, 18, 14, 90, 30, 50],
@@ -333,7 +276,7 @@ const initChartsSevenDays = () => {
 	myChart.setOption(option);
 	state.myCharts.push(myChart);
 };
-// 初始化近30天预警总数
+// 初始化近30天陪诊服务
 const initChartsWarning = () => {
 	const myChart = echarts.init(chartsWarningRef.value);
 	const option = {
@@ -348,7 +291,7 @@ const initChartsWarning = () => {
 		},
 		series: [
 			{
-				name: '面积模式',
+				name: '陪诊服务类型',
 				type: 'pie',
 				radius: [20, 50],
 				center: ['50%', '50%'],
@@ -357,10 +300,9 @@ const initChartsWarning = () => {
 					borderRadius: 8,
 				},
 				data: [
-					{ value: 40, name: '监测设备预警' },
-					{ value: 38, name: '天气预警' },
-					{ value: 32, name: '任务预警' },
-					{ value: 30, name: '病虫害预警' },
+					{ value: 40, name: '院内陪朕' },
+					{ value: 38, name: '全程陪诊' },
+					{ value: 32, name: '尊享陪诊' },
 				],
 			},
 		],
@@ -368,7 +310,7 @@ const initChartsWarning = () => {
 	myChart.setOption(option);
 	state.myCharts.push(myChart);
 };
-// 初始化当前设备监测
+// 初始化当前服务
 const initChartsMonitor = () => {
 	const myChart = echarts.init(chartsMonitorRef.value);
 	const option = {
@@ -408,7 +350,7 @@ const initChartsMonitor = () => {
 	myChart.setOption(option);
 	state.myCharts.push(myChart);
 };
-// 初始化近7天投入品记录
+// 初始化近7天服务
 const initChartsInvestment = () => {
 	const myChart = echarts.init(chartsInvestmentRef.value);
 	const option = {

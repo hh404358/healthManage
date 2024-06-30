@@ -10,7 +10,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="出生日期">
-							<el-calender v-model="state.ruleForm.pBirthdate" placeholder="请选择出生日期"></el-calender>
+							<el-calender v-model="state.ruleForm.pBirthday" placeholder="请选择出生日期"></el-calender>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
@@ -59,17 +59,17 @@ const PatientDialogFormRef = ref();
 const state = reactive({
 	ruleForm: {
 		pName: '',
-		pBirthdate: new Date().toLocaleString(),
+		pBirthday: new Date().toLocaleString(),
 		status: true,
-		PId: '',
-		phone: '',
+		pId: '',
+		phonenumber: '',
 		pCity:'',
 		pSex: '',
 		password: '',
-		PNo: Math.random(),
-		roleSign:'病人'
+		pNo: Math.random(),
+		// roleSign:'病人'
 	},
-	PatientData: [] as RowUserType[], // 病人数据
+	PatientData: [] as PatientTreeType[], // 病人数据
 	dialog: {
 		isShowDialog: false,
 		type: '',
@@ -79,7 +79,7 @@ const state = reactive({
 });
 
 // 打开弹窗
-const openDialog = (type: string, row: RowUserType) => {
+const openDialog = (type: string, row: PatientTreeType) => {
 	if (type === 'edit') {
 		// row.PatientLevel = ['vueNextAdmin'];
 		// row.person = 'ljr';
@@ -109,7 +109,7 @@ const onCancel = () => {
 	closeDialog();
 };
 // 提交
-const onSubmit = (row: RowUserType) => {
+const onSubmit = (row: PatientTreeType) => {
 	if(state.dialog.title==='新增病人') {
 		addPatient(row);
 	}else{
@@ -126,7 +126,7 @@ const getMenuData = () => {
 	// });
 	
 	state.PatientData.push({
-		id: Math.random(),
+		// id: Math.random(),
 		password:'123',
 		status:true,
 		phonenumber:'12345678921',
@@ -136,11 +136,11 @@ const getMenuData = () => {
 		pBirthday:new Date().toLocaleString(),
 		pId:'35077700106243212',
 		pCity:'厦门',
-		roleSign: '病人'		,
+		// roleSign: '病人'		,
 		
 	});
 	state.PatientData.push({
-		id: Math.random(),
+		// id: Math.random(),
 		password:'123',
 		status:true,
 		phonenumber:'12345678921',
@@ -150,11 +150,11 @@ const getMenuData = () => {
 		pBirthday:new Date().toLocaleString(),
 		pId:'35077700106243212',
 		pCity:'厦门',
-		roleSign: '病人'		,
+		// roleSign: '病人'		,
 			
 	});
 	state.PatientData.push({
-		id: Math.random(),
+		// id: Math.random(),
 		password:'123',
 		status:true,
 		phonenumber:'12345678921',
@@ -164,7 +164,7 @@ const getMenuData = () => {
 		pBirthday:new Date().toLocaleString(),
 		pId:'35077700106243212',
 		pCity:'厦门',
-		roleSign: '病人'		,
+		// roleSign: '病人'		,
 			
 	});
 };

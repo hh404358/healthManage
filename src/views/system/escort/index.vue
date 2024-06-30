@@ -47,7 +47,7 @@
             {{ scope.row.isCarer ? '是' : '否' }}
           </template>
         </el-table-column>
-        <el-table-column prop="eServiceType" label="服务类型" show-overflow-tooltip></el-table-column>
+        <!-- <el-table-column prop="eServiceType" label="服务类型" show-overflow-tooltip></el-table-column> -->
 				<el-table-column label="操作" show-overflow-tooltip width="140">
 					<template #default="scope">
 						<el-button size="small" text type="primary" @click="onOpenAddPhysician('add')" v-if="isadmin">新增</el-button>

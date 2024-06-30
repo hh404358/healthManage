@@ -130,11 +130,12 @@ declare type physicianType = {
 	eNo:number;
 	eName:string;
 	eSex:string;
-	eBirthday:string;   //存疑  date类型
+	eBirthday:string;   
 	eId:string;
 	eCity:string;  
-	isCarer:char;  //存疑 char?
-    eServiceType:string; //后端是int类型 但感觉字符型更合理
+	isCarer:char;  
+	eServiceType: []
+    // eServiceType:string; //后端是int类型 但感觉字符型更合理
 };
 
 declare interface SysPhysicianState {

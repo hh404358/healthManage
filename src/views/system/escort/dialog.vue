@@ -15,7 +15,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="出生日期">
-							<el-calender v-model="state.ruleForm.eBirthday" placeholder="请选择出生日期"></el-calender>
+							<el-date-picker v-model="state.ruleForm.eBirthday" placeholder="请选择出生日期"></el-date-picker>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
@@ -45,6 +45,19 @@
 					</el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
               <el-form-item label="服务类型">
+				<el-checkbox-group v-model="state.ruleForm.eServiceType">
+					<el-checkbox
+						v-for="item in state1.tableData.data"
+						:label="item.stType"
+						:key="item.stNo"
+					>
+						{{ item.stType }}
+					</el-checkbox>
+				</el-checkbox-group>
+				<p>已选择：</p>
+				<ul>
+				<li v-for="option in state.ruleForm.eServiceType" :key="option">{{ option }}</li>
+				</ul>
                 <el-input v-model="state.ruleForm.eServiceType" placeholder="请输入服务类型" clearable></el-input>
               </el-form-item>
             </el-col>
@@ -61,8 +74,9 @@
 </template>
 
 <script setup lang="ts" name="systemPhysicianDialog">
-import { getEscorts,updateEscort,removeEscort,addEscort } from '/@/api/escort';
-import { reactive, ref } from 'vue';
+import { getEscorts,updateEscort,removeEscort,addEscort, listEscorts } from '/@/api/escort';
+import { onMounted, reactive, ref } from 'vue';
+import {listServiceType} from '/@/api/servetype';
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
@@ -81,14 +95,37 @@ const state = reactive({
 		password: '',
 		eNo: Math.random(),
         isCarer: true,
-        eServiceType: '',
+        //eServiceTypeNo: [],
+		eServiceType:[]
+
 	},
-	EscortData: [] as physicianType[], // 陪诊师数据
+	// EscortData: [] as physicianType[], // 陪诊师数据
 	dialog: {
 		isShowDialog: false,
 		type: '',
 		title: '',
 		submitTxt: '',
+	},
+	tableData: {
+		data: [],
+		total: 0,
+		loading: false,
+		param: {
+			pageNum: 1,
+			pageSize: 10,
+		},
+	},
+
+});
+const state1 = reactive<SysServiceClassState>({
+	tableData: {
+		data: [],
+		total: 0,
+		loading: false,
+		param: {
+			pageNum: 1,
+			pageSize: 10,
+		},
 	},
 });
 
@@ -112,7 +149,7 @@ const openDialog = (type: string, row: physicianType) => {
 		// });
 	}
 	state.dialog.isShowDialog = true;
-	getMenuData();
+	// getMenuData();
 };
 // 关闭弹窗
 const closeDialog = () => {
@@ -123,7 +160,7 @@ const onCancel = () => {
 	closeDialog();
 };
 // 提交
-const onSubmit = (row: physicianType) => {
+const onSubmit = (row:object) => {
 	if(state.dialog.title==='新增陪诊师') {
 		addEscort(row);
 	}else{
@@ -133,58 +170,70 @@ const onSubmit = (row: physicianType) => {
 	emit('refresh');
 	
 };
-// 初始化陪诊师数据
-const getMenuData = () => {
-	//state.PatientData = getPatients();
-	state.EscortData.push({
-		eNo: Math.random(),
-		eName: 'vue-admin',
-		status: true,
-		// sort: Math.random(),
-		eId: '35077700106243212',
-		eBirthday: new Date().toLocaleString(),
-		phonenumber: '12345678921',
-		eCity: '厦门',
-		eSex: '男',
-		password: '123',
-        isCarer: true,
-        eServiceType: '院内陪联',
-		// roleSign: '陪诊师'
+const getServiceType =()=>{
+	state1.tableData.data = [];
+	listServiceType().then(response=>{
+		state1.tableData.data = response.data;
+	})
+}
+onMounted(() => {
+	getServiceType();
+});
+
+// // 初始化陪诊师数据
+// const getMenuData = () => {
+// 	listEscorts().then(response=>{
+// 		state.EscortData = response;
+// 	})
+// 	state.EscortData.push({
+// 		eNo: Math.random(),
+// 		eName: 'vue-admin',
+// 		status: true,
+// 		// sort: Math.random(),
+// 		eId: '35077700106243212',
+// 		eBirthday: new Date().toLocaleString(),
+// 		phonenumber: '12345678921',
+// 		eCity: '厦门',
+// 		eSex: '男',
+// 		password: '123',
+//         isCarer: true,
+//         eServiceType: '院内陪联',
+// 		// roleSign: '陪诊师'
 		
-	});
-	state.EscortData.push({
-		eNo: Math.random(),
-		eName: 'ljr',
-		status: true,
-		// sort: Math.random(),
-		eId: '35077700106243211',
-		eBirthday: new Date().toLocaleString(),
-		phonenumber: '12345678911',
-		eCity: '南平',
-		eSex: '女',
-		password: '123',
-        isCarer: true,
-        eServiceType: '全程陪诊',
-		// roleSign: '陪诊师'
+// 	});
+// 	state.EscortData.push({
+// 		eNo: Math.random(),
+// 		eName: 'ljr',
+// 		status: true,
+// 		// sort: Math.random(),
+// 		eId: '35077700106243211',
+// 		eBirthday: new Date().toLocaleString(),
+// 		phonenumber: '12345678911',
+// 		eCity: '南平',
+// 		eSex: '女',
+// 		password: '123',
+//         isCarer: true,
+//         eServiceType: '全程陪诊',
+// 		// roleSign: '陪诊师'
 			
-	});
-	state.EscortData.push({
-		eNo: Math.random(),
-		eName: 'hahaha',
-		status: true,
-		// sort: Math.random(),
-		eId: '35077700106113212',
-		eBirthday: new Date().toLocaleString(),
-		phonenumber: '12345678121',
-		eCity: '厦门',
-		eSex: '男',
-		password: '123',
-        isCarer: true,
-        eServiceType: '尊享陪诊',
-		// roleSign: '陪诊师'
+// 	});
+// 	state.EscortData.push({
+// 		eNo: Math.random(),
+// 		eName: 'hahaha',
+// 		status: true,
+// 		// sort: Math.random(),
+// 		eId: '35077700106113212',
+// 		eBirthday: new Date().toLocaleString(),
+// 		phonenumber: '12345678121',
+// 		eCity: '厦门',
+// 		eSex: '男',
+// 		password: '123',
+//         isCarer: true,
+//         eServiceType: '尊享陪诊',
+// 		// roleSign: '陪诊师'
 			
-	});
-};
+// 	});
+// };
 
 // 暴露变量
 defineExpose({

@@ -10,7 +10,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="出生日期">
-							<el-calender v-model="state.ruleForm.pBirthday" placeholder="请选择出生日期"></el-calender>
+							<el-date-picker v-model="state.ruleForm.pBirthday" placeholder="请选择出生日期"></el-date-picker>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">

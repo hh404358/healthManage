@@ -188,7 +188,7 @@
 							</el-col>
 							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 								<el-form-item>
-									<el-button type="primary">
+									<el-button type="primary" @click="updateUserInfo()">
 										<el-icon>
 											<ele-Position />
 										</el-icon>
@@ -215,7 +215,7 @@
 							<div class="personal-edit-safe-item-left">
 								<div class="personal-edit-safe-item-left-label">密保手机</div>
 								<div class="personal-edit-safe-item-left-value">已绑定手机:{{ state.patientruleform.phonenumber }}</div>
-								<el-input v-model="state.patientruleform.phonenumber" v-if="editPassword"></el-input>
+								<el-input v-model="state.patientruleform.phonenumber" v-if="state.editPassword"></el-input>
 							</div>
 							<div class="personal-edit-safe-item-right">
 								<el-button text type="primary" @click="updatePhone()">立即修改</el-button>
@@ -231,8 +231,9 @@
 <script setup lang="ts" name="personal">
 import { reactive, computed, onMounted, ref } from 'vue';
 import { formatAxis } from '/@/utils/formatTime';
-import {getInfo} from '/@/api/personal';
+import {getInfo,editPassword,editPhone,editUserInfo} from '/@/api/personal';
 import { Session } from '/@/utils/storage';
+import ElMessage from 'element-plus/es/components/message';
 
 // 定义变量内容
 // const state = reactive<RowPersonalType>({
@@ -286,32 +287,29 @@ const state = reactive({
 
 	roleSign:Session.get('roleSign'),
 	editPhone: false,
-	editPassword: false
+	editPassword: false,
+	token: Session.get('token')
 });
-const updatePhone = () =>{
-	editPhone = true;
-	if(state.roleSign === 'escort'){
-		editPhone(state.ruleForm.eNo,state.roleSign).then(response=>{
-			ElMessage.success('修改成功');
-		})
-	}else{
-		editPhone(state.ruleForm.eNo,state.roleSign).then(response=>{
+const updateUserInfo = () =>{
+	if(state.roleSign==='escort'){
+		editUserInfo(state.token,state.roleSign).then(response=>{
 			ElMessage.success('修改成功');
 		})
 	}
-	
+}
+const updatePhone = () =>{
+	state.editPhone = true;
+	editPhone(state.token,state.roleSign).then(response=>{
+			ElMessage.success('修改成功');
+	})	
 }
 const updatePassword = () =>{
-	editPassword = true;
-	if(state.roleSign === 'escort'){
-		editPassword(state.ruleForm.eNo,state.roleSign).then(response=>{
-			ElMessage.success('修改成功');
-		})
-	}else{
-		editPassword(state.ruleForm.eNo,state.roleSign).then(response=>{
-			ElMessage.success('修改成功');
-		})
-	}
+	state.editPassword = true;
+	
+	editPassword(state.token,state.roleSign).then(response=>{
+		ElMessage.success('修改成功');
+	})
+	
 	
 }
 

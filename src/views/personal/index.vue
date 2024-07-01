@@ -91,6 +91,24 @@
 							<div class="personal-edit-safe-item-left">
 								<div class="personal-edit-safe-item-left-label">账户密码</div>
 								<div class="personal-edit-safe-item-left-value">当前密码强度：强</div>
+								<el-input
+									:type="state.isShowPassword ? 'text' : 'password'"
+									:placeholder="$t('message.account.accountPlaceholder2')"
+									v-model="state.ruleForm.password"
+									autocomplete="off"
+								>
+									<template #prefix>
+										<el-icon class="el-input__icon"><ele-Unlock /></el-icon>
+									</template>
+									<template #suffix>
+										<i
+											class="iconfont el-input__icon login-content-password"
+											:class="state.isShowPassword ? 'icon-yincangmima' : 'icon-xianshimima'"
+											@click="state.isShowPassword = !state.isShowPassword"
+										>
+										</i>
+									</template>
+								</el-input>
 							</div>
 							<div class="personal-edit-safe-item-right">
 								<el-button text type="primary" @click="updatePassword()">立即修改</el-button>
@@ -204,6 +222,24 @@
 							<div class="personal-edit-safe-item-left">
 								<div class="personal-edit-safe-item-left-label">账户密码</div>
 								<div class="personal-edit-safe-item-left-value">当前密码强度：强</div>
+								<el-input
+									:type="state.isShowPassword ? 'text' : 'password'"
+									:placeholder="$t('message.account.accountPlaceholder2')"
+									v-model="state.patientruleform.password"
+									autocomplete="off"
+								>
+									<template #prefix>
+										<el-icon class="el-input__icon"><ele-Unlock /></el-icon>
+									</template>
+									<template #suffix>
+										<i
+											class="iconfont el-input__icon login-content-password"
+											:class="state.isShowPassword ? 'icon-yincangmima' : 'icon-xianshimima'"
+											@click="state.isShowPassword = !state.isShowPassword"
+										>
+										</i>
+									</template>
+								</el-input>
 							</div>
 							<div class="personal-edit-safe-item-right">
 								<el-button text type="primary" @click="updatePassword()">立即修改</el-button>
@@ -261,7 +297,7 @@ const state = reactive({
 		pNo:Math.random(),
 
 	},
-
+	isShowPassword:false,
 	roleSign:Session.get('roleSign'),
 	editPhone: false,
 	editPassword: false,

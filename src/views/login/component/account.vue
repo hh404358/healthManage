@@ -104,7 +104,7 @@ const onSignIn = async () => {
 	// 存储 token 到浏览器缓存
 	login(state.ruleForm).then(async (response)=>{
 	// 登录成功记录token和用户信息，登录失败给对应提示
-	Session.set('token',response);
+	Session.set('token',response.data);
 	Cookies.set('userName', state.ruleForm.userName);
 	Session.set('roleSign',state.ruleForm.roleSign);
 	let role: Array<string> = [state.ruleForm.roleSign];
@@ -130,7 +130,7 @@ const onSignIn = async () => {
 		console.log('e',e)
 		ElMessage.warning('出现异常，请联系管理人员');
 		Session.clear();
-		state.loading.signIn = false;
+		//state.loading.signIn = false;
 	 })
 };
 

@@ -46,7 +46,7 @@ export function finish(stNo:number,pNo:number){
 
 //病人
 //注册
-export function register(data:PatientTreeType){
+export function register(data:object){
 	return request({
 		url: '/patient/register',
 		method: 'post',

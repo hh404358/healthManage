@@ -14,6 +14,7 @@ export function login(data:object){
 		headers:{
 			isToken:false
 		},
+		data
 
 	})
 }

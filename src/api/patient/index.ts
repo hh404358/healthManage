@@ -25,7 +25,7 @@ export function addPatient(data:object){
 		headers:{
 			isToken:true,
 		},
-		data: {data : data}
+
 	})
 }
 
@@ -36,27 +36,10 @@ export function updatePatient(data:object){
 		headers:{
 			isToken:true,
 		},
-		data: {data : data}
+
 	})
 }
-// **请求URL**
 
-// /admin/updatePatient `PUT` 
-
-// **请求体**
-
-// ```json
-// {
-// 	"account":"string",
-// 	"password":"string",
-// 	"phonenumber":"string",
-// 	"pNo":"int",
-// 	"pName":"string",
-// 	"pSex":"string",
-// 	"pBirthday":"date",
-// 	"pId":"string",
-// 	"pCity":"string"
-// }
 export function delPatient(userId:number|string){
 	return request({
 		url: '/admin/removePatient ',

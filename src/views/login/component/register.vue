@@ -25,7 +25,7 @@
         <el-form-item class="login-animation2">
 			<el-input text :placeholder="$t('message.register.phonenumber')" v-model="state.patientruleform.phonenumber" clearable autocomplete="off">
 				<template #prefix>
-					<el-icon class="el-input__icon"><ele-Phone /></el-icon>
+					<el-icon class="el-input__icon"><el-Phine /></el-icon>
 				</template>
 			</el-input>
 			<el-alert
@@ -127,25 +127,24 @@
                         show-icon  :closable="false">
                     </el-alert>
 		</el-form-item>
-		<el-form-item class="login-animation2">
+		<el-form-item class="login-animation2" label="性别">
 			<el-radio-group v-model="state.ruleForm.eSex">
-
 				<el-icon class="el-input__icon"><ele-UserFilled /></el-icon>
 				<el-radio value="男">男</el-radio>
 				<el-icon class="el-input__icon"><ele-Avatar /></el-icon>
 				<el-radio value="女">女</el-radio>
 			</el-radio-group>
 		</el-form-item>
-		<el-form-item class="login-animation2">
+		<el-form-item class="login-animation2" label="是否是医护人员">
 			<el-radio-group v-model="state.ruleForm.isCarer">
-
+				
 				<el-icon class="el-input__icon"><ele-UserFilled /></el-icon>
 				<el-radio value="是">是</el-radio>
 				<el-icon class="el-input__icon"><ele-Avatar /></el-icon>
 				<el-radio value="否">否</el-radio>
 			</el-radio-group>
 		</el-form-item>
-		<el-form-item label="服务类型">
+		<!-- <el-form-item label="服务类型">
 				<el-checkbox-group v-model="state.ruleForm.eServiceType">
 					<el-checkbox
 						v-for="item in state1.tableData.data"
@@ -155,12 +154,11 @@
 						{{ item.stType }}
 					</el-checkbox>
 				</el-checkbox-group>
-				<p>已选择：</p>
-				<ul>
-				<li v-for="option in state.ruleForm.eServiceType" :key="option">{{ option }}</li>
-				</ul>
-                <el-input v-model="state.ruleForm.eServiceType" placeholder="请输入服务类型" clearable></el-input>
-              </el-form-item>
+				<div>
+				
+			</div>
+        </el-form-item> -->
+
 		<el-form-item class="login-animation2">
 			<el-date-picker v-model="state.ruleForm.eBirthday" type="date" :placeholder="$t('message.register.Birthday')"></el-date-picker>	
 		</el-form-item>
@@ -208,7 +206,7 @@
 			</el-input>
 			<el-alert
                         v-show="state.passwordcheck"
-                        title="密码强度不够 (以字母开头，长度在6~16之间，只能包含字母、数字和下划线)"
+                        title="密码强度不够(以字母开头，长度在6~16之间，只能包含字母、数字和下划线)"
                         type="error"
                         show-icon  :closable="false">
                     </el-alert>
@@ -276,7 +274,7 @@ const state = reactive({
 		pBirthday:'',
 		pId:'',
 		pCity:'',
-		status:true,
+		status:'',
 		pNo:Math.random(),
 
 	},
@@ -411,6 +409,7 @@ const getServiceType =()=>{
 	state1.tableData.data = [];
 	listServiceType().then(response=>{
 		state1.tableData.data = response.data;
+		console.log(response.data);
 	})
 }
 onMounted(() => {

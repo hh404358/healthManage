@@ -4,7 +4,7 @@
 			<div class="system-Physician-search mb15">
 				<el-input size="default" placeholder="请输入城市名称" style="max-width: 180px" v-model="city"> </el-input>
                 <el-input size="default" placeholder="请输入服务名称" style="max-width: 180px" v-model="type"> </el-input>
-				<el-button size="default" type="primary" class="ml10" @click="getByCityAndeS(state.tableData.data.eCity,state.tableData.data.eServiceType)" >
+				<el-button size="default" type="primary" class="ml10" @click="getByCityAndeS(city,type)" >
 					<el-icon>
 						<ele-Search />
 					</el-icon>

@@ -130,9 +130,11 @@ const state1 = reactive<SysPhysicianState>({
 });
 const book = (stNo:number) =>{
 	alltype = !alltype;
-	reserveService(stNo).then(){
+	reserveService(stNo).then(respnose=>{
+		{
 		ElMessage.success('预约成功');
-	}
+		}
+	})
 }
 // 初始化表格数据
 const getTableData = () => {

@@ -87,7 +87,7 @@
 			</el-input>
 			<el-alert
                         v-show="state.passwordcheck"
-                        title="密码强度不够密码 (以字母开头，长度在6~16之间，只能包含字母、数字和下划线)"
+                        title="密码强度不够(以字母开头，长度在6~16之间，只能包含字母、数字和下划线)"
                         type="error"
                         show-icon  :closable="false">
                     </el-alert>

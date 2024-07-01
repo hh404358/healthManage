@@ -1,7 +1,7 @@
 <template>
 	<div class="personal layout-pd">
 		<!-- secort -->
-		<el-row>
+		<el-row v-if="state.roleSign ==='escort'">
 			<!-- 个人信息 -->
 			<el-col :xs="24" :sm="16">
 				<el-card shadow="hover" header="个人信息">
@@ -114,7 +114,7 @@
 
 
 		<!-- patient -->
-		<el-row>
+		<el-row v-if="state.roleSign === 'patient'">
 			<!-- 个人信息 -->
 			<el-col :xs="24" :sm="16">
 				<el-card shadow="hover" header="个人信息">
@@ -235,29 +235,6 @@ import {getInfo,editPassword,editPhone,editUserInfo} from '/@/api/personal';
 import { Session } from '/@/utils/storage';
 import ElMessage from 'element-plus/es/components/message';
 
-// 定义变量内容
-// const state = reactive<RowPersonalType>({
-// 	name: 'vue-admin',
-// 	status: true,
-// 	phone: '12345678921',
-// 	birthdate: new Date().toLocaleString(),
-// 	city: '厦门',
-// 	// personalForm: {
-// 	// 	name: '',
-// 	// 	email: '',
-// 	// 	autograph: '',
-// 	// 	occupation: '',
-// 	// 	phone: '',
-// 	// 	sex: '',
-// 	// },
-// 	personalForm: {
-// 		email: '',
-// 		autograph: '',
-// 		occupation: '',
-// 		sex: ''
-// 	}
-	
-// });
 const state = reactive({
 	ruleForm: {	
 		password:'',

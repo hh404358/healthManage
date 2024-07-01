@@ -101,7 +101,7 @@
 						<div class="personal-edit-safe-item">
 							<div class="personal-edit-safe-item-left">
 								<div class="personal-edit-safe-item-left-label">密保手机</div>
-								<div class="personal-edit-safe-item-left-value">已绑定手机:{{ state.ruleForm.phonenumber }}</div>
+								<el-input v-model ="state.ruleForm.phonenumber" class="personal-edit-safe-item-left-value">已绑定手机:{{ state.ruleForm.phonenumber }}</el-input>
 							</div>
 							<div class="personal-edit-safe-item-right">
 								<el-button text type="primary" @click="updatePhone()">立即修改</el-button>
@@ -269,23 +269,39 @@ const state = reactive({
 });
 const updateUserInfo = () =>{
 	if(state.roleSign==='escort'){
-		editUserInfo(state.token,state.roleSign).then(response=>{
-			ElMessage.success('修改成功');
+		editUserInfo(state.token,state.roleSign,state.ruleForm).then(response=>{
+			ElMessage.success('修改个人信息成功');
+		})
+	}else{
+		editUserInfo(state.token,state.roleSign,state.patientruleform).then(response=>{
+			ElMessage.success('修改个人信息成功');
 		})
 	}
 }
 const updatePhone = () =>{
 	state.editPhone = true;
-	editPhone(state.token,state.roleSign).then(response=>{
-			ElMessage.success('修改成功');
-	})	
+	if(state.roleSign === 'escort'){
+		editPhone(state.token,state.roleSign,state.ruleForm.phonenumber).then(response=>{
+			ElMessage.success('修改手机号成功');
+		})	
+	}else{
+		editPhone(state.token,state.roleSign,state.patientruleform.phonenumber).then(response=>{
+			ElMessage.success('修改手机号成功');
+		})	
+	}
+	
 }
 const updatePassword = () =>{
 	state.editPassword = true;
-	
-	editPassword(state.token,state.roleSign).then(response=>{
-		ElMessage.success('修改成功');
-	})
+	if(state.roleSign === 'escort'){
+		editPassword(state.token,state.roleSign,state.ruleForm.password).then(response=>{
+			ElMessage.success('修改密码成功');
+		})
+	}else{
+		editPassword(state.token,state.roleSign,state.patientruleform.password).then(response=>{
+			ElMessage.success('修改密码成功');
+		})
+	}
 	
 	
 }

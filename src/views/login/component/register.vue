@@ -145,6 +145,22 @@
 				<el-radio value="否">否</el-radio>
 			</el-radio-group>
 		</el-form-item>
+		<el-form-item label="服务类型">
+				<el-checkbox-group v-model="state.ruleForm.eServiceType">
+					<el-checkbox
+						v-for="item in state1.tableData.data"
+						:label="item.stType"
+						:key="item.stNo"
+					>
+						{{ item.stType }}
+					</el-checkbox>
+				</el-checkbox-group>
+				<p>已选择：</p>
+				<ul>
+				<li v-for="option in state.ruleForm.eServiceType" :key="option">{{ option }}</li>
+				</ul>
+                <el-input v-model="state.ruleForm.eServiceType" placeholder="请输入服务类型" clearable></el-input>
+              </el-form-item>
 		<el-form-item class="login-animation2">
 			<el-date-picker v-model="state.ruleForm.eBirthday" type="date" :placeholder="$t('message.register.Birthday')"></el-date-picker>	
 		</el-form-item>
@@ -210,7 +226,7 @@
 </template>
 
 <script setup lang="ts" name="register">
-import { reactive, computed } from 'vue';
+import { reactive, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
@@ -226,6 +242,7 @@ import { NextLoading } from '/@/utils/loading';
 import { number } from 'echarts';
 import { verifyIdCard,verifyPhone,verifyFullName,verifyPassword } from '/@/utils/toolsValidate';
 import { Eregister,register} from '/@/api/escortservice';
+import { listServiceType } from '/@/api/servetype';
 
 
 // 定义变量内容
@@ -277,8 +294,18 @@ const state = reactive({
 	Idcheck:false,
 	citycheck:false,
 	passwordcheck:false,
-	
-	
+		
+});
+const state1 = reactive<SysServiceClassState>({
+	tableData: {
+		data: [],
+		total: 0,
+		loading: false,
+		param: {
+			pageNum: 1,
+			pageSize: 10,
+		},
+	},
 });
 const scrollStyle = {
 	overflowY: 'auto',
@@ -380,6 +407,15 @@ const onRegister = async () => {
 	
 	
 };
+const getServiceType =()=>{
+	state1.tableData.data = [];
+	listServiceType().then(response=>{
+		state1.tableData.data = response.data;
+	})
+}
+onMounted(() => {
+	getServiceType();
+});
 
 
 </script>

@@ -137,6 +137,15 @@
 			</el-radio-group>
 		</el-form-item>
 		<el-form-item class="login-animation2">
+			<el-radio-group v-model="state.ruleForm.isCarer">
+
+				<el-icon class="el-input__icon"><ele-UserFilled /></el-icon>
+				<el-radio value="是">是</el-radio>
+				<el-icon class="el-input__icon"><ele-Avatar /></el-icon>
+				<el-radio value="否">否</el-radio>
+			</el-radio-group>
+		</el-form-item>
+		<el-form-item class="login-animation2">
 			<el-date-picker v-model="state.ruleForm.eBirthday" type="date" :placeholder="$t('message.register.Birthday')"></el-date-picker>	
 		</el-form-item>
 		<el-form-item class="login-animation2">
@@ -237,8 +246,8 @@ const state = reactive({
 		eId:'',
 		eCity:'',
 		eServiceType:[],
-		isCarer:false,
-		status:true,
+		isCarer:'',
+		status:'',
 		eNo:Math.random(),
 	},
 	
@@ -320,8 +329,8 @@ const onRegister = async () => {
 			state.ruleForm.eId='',
 			state.ruleForm.eCity='',
 			state.ruleForm.eServiceType,
-			state.ruleForm.isCarer=false,
-			state.ruleForm.status=true,
+			state.ruleForm.isCarer="false",
+			state.ruleForm.status="true",
 			state.ruleForm.eNo=Math.random()
 		})
 

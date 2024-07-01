@@ -23,7 +23,7 @@
 						<div v-if="!state.isScan">
 							<div v-if="state.isLogin">
 								<el-tabs v-model="state.tabsActiveName" >
-								<el-tab-pane :label="$t('message.label.one1')" name="account">
+								<el-tab-pane :label="$t('message.label.two2')" name="account">
 									<Account />
 								</el-tab-pane>
 								<el-tab-pane :label="$t('message.label.three3')" name="register">
